@@ -35,7 +35,7 @@ setup_wifi() {
 update_mirrorlist() {
   ## Update mirrorlist.
   # Move current mirrorlist for use as a backup.
-  mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
+  cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
 
   read -r -p "What mirror location do you prefer? DE US RU or CH? " mirrorcountry
 
