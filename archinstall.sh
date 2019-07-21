@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 # Greeting
-echo "Hello this is caevees Installscript which is heavily inspired by aidans script."
+echo "Hello this is caevees Installscript which is heavily inspired by aidans script. "
 sleep 2
 
 # Shutdown
@@ -72,21 +72,21 @@ partition_drive() {
   read -r -p "Do you use UEFI? (y/n) " uefi
 
  # BIOS partitioning.
- if [ "$(uefi)" = "n" ]; then
+ if [ "${uefi}" = "n" ]; then
    # Create a new DOS partition layout.
-   yes | parted "$(device)" mklabel msdos
+   yes | parted "${device}" mklabel msdos
 
    # Create a EXT4 root partition.
-   parted "$(device)" mkpart primary ext4 1MiB "$(rootsize)" 
+   parted "${device}" mkpart primary ext4 1MiB "${rootsize}" 
 
    # Allow it to be booted into.
-   parted "$(device)" set 1 boot on
+   parted "${device}" set 1 boot on
 
    # Format the partition.
-   mkfs.ext4 "$(device)"1
+   mkfs.ext4 "${device}"1
 
    # Mount the partition as /mnt
-   mount "$(device)"1 /mnt
+   mount "${device}"1 /mnt
 
    # For home partition.
    home_part="2"
@@ -94,25 +94,25 @@ partition_drive() {
  
 
  # UEFI partitioning.
- if [ "$(uefi)" = "y" ]; then
+ if [ "${uefi}" = "y" ]; then
    # Create a new GPT partition layout.
-   yes | parted "$(device)" mklabel gpt
+   yes | parted "${device}" mklabel gpt
 
    # Create a 551MiB FAT32 boot partition.
-   parted "$(device)" mkpart primary fat32 1MiB 551MiB
-   parted "$(device)" set 1 esp on
+   parted "${device}" mkpart primary fat32 1MiB 551MiB
+   parted "${device}" set 1 esp on
 
    # Format the boot partition.
-   mkfs.fat -F32 "$(device)"1
+   mkfs.fat -F32 "${device}"1
 
    # Create a EXT4 root partition.
-   parted "$(device)" mkpart primary ext4 551MiB "$(rootsize)"
+   parted "${device}" mkpart primary ext4 551MiB "${rootsize}"
 
    # Format the root partition.
-   mkfs.ext4 "$(device)"2
+   mkfs.ext4 "${device}"2
 
    # Mount the root partition as /mnt.
-   mount "$(device)"2 /mnt
+   mount "${device}"2 /mnt
 
    # For home partition.
    home_part="3"
@@ -120,18 +120,18 @@ partition_drive() {
 
  # Create a home partition.
  read -r -p "Do you want a seperate home partition? (y/n) " wanthome
- if [ "$(wanthome)" = "y" ]; then
+ if [ "${wanthome}" = "y" ]; then
    read -r -p "How big do you want the home partition? Use 'GiB' or 'MiB'. '100%' to fill up the rest of the drive. " homesize
 
    # Create a EXT4 home partition.
-   parted "$(device)" mkpart primary ext4 "$(rootsize)" "$(homesize)"
+   parted "${device}" mkpart primary ext4 "${rootsize}" "${homesize}"
 
    # Format the home partition.
-   mkfs.ext4 "$(device)""$(home_part)"
+   mkfs.ext4 "${device}""${home_part}"
 
    # Create a home directory and mount the drive .
    mkdir /mnt/home
-   mount "$(device)""$(home_part)" /mnt/home
+   mount "${device}""${home_part}" /mnt/home
  fi
 }
 
@@ -147,9 +147,9 @@ installation() {
 #!/bin/bash
 
 # Install packages needed for GRUB. linux-headers isn't really needed but will help.
-if [ "$(uefi)" = "n" ]; then
+if [ "${uefi}" = "n" ]; then
   pacman -S --noconfirm -q grub-bios linux-headers
-elif [ "$(uefi)" = "y" ]; then
+elif [ "${uefi}" = "y" ]; then
   pacman -S --noconfirm -q grub efibootmgr dosfstools mtools linux-headers
 fi
 
@@ -158,27 +158,27 @@ mkinitcpio -p linux
 
 # Set locale.
 read -r -p "What language is your OS supposed to be in? (de, us, ru,) " locale
-if [ "$(locale)" = "de" ]; then
+if [ "${locale}" = "de" ]; then
   sed -i 's/#de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen
   locale-gen
 fi
-if [ "$(locale)" = "us" ]; then
+if [ "${locale}" = "us" ]; then
   sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
   locale-gen
 fi
-if [ "$(locale)" = "ru" ]; then
+if [ "${locale}" = "ru" ]; then
   sed -i 's/#ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/' /etc/locale.gen
   locale-gen
 fi
 
-if [ "$(uefi)" = "y" ]; then
+if [ "${uefi}" = "y" ]; then
   # Install GRUB for UEFI.
   mkdir /boot/EFI
-  mount "$(device)"1 /boot/EFI
+  mount "${device}"1 /boot/EFI
   grub-install --target=x86_64-efi --bootloaderid=grub_uefi --recheck
-elif [ "$(uefi)" = "n" ]; then
+elif [ "${uefi}" = "n" ]; then
   # Install GRUB for BIOS.
-  grub-install --target=i386-pc --recheck "$(device)"
+  grub-install --target=i386-pc --recheck "${device}"
 fi
 
 # Set GRUB locale.
@@ -203,7 +203,7 @@ last_steps() {
 
   # Reboot.
   read -r -p "Reboot to finish the install or press n to cancel the reboot and keep configuring. (y/n) " reboot
-  if [ "$(reboot)" = "y" ]; then
+  if [ "${reboot}" = "y" ]; then
     reboot
   fi
 }
