@@ -66,7 +66,7 @@ partition_drive() {
 
   # Ask what device to use and the size of the root partition.
   read -r -p "What drive to partition? Type /dev/sda if you have only one drive. " device
-  read -r -p "How big do you want the root partition? Use 'GiB' or 'MiB' example: 300GiB to make it 300 Gegibytes big. Enter '100%' if you want it to fill up the rest of the drive. "
+  read -r -p "How big do you want the root partition? Use 'GiB' or 'MiB' example: 300GiB to make it 300 Gegibytes big. Enter '100%' if you want it to fill up the rest of the drive. " rootsize
 
   # Ask if they use UEFI.
   read -r -p "Do you use UEFI? (y/n) " uefi
