@@ -134,3 +134,82 @@ partition_drive() {
    mount "$(device)""$(home_part)" /mnt/home
  fi
 }
+
+installation() {
+  # Install base packages with pacstrap.
+  pacstrap -i /mnt base base-devel
+
+  # Generate /etc/fstab.
+  genfstab -U -p /mnt >> /mnt/etc/fstab
+
+  # Create the script to be run in the chroot.
+  cat <<EOF > /mnt/root/archinstall-part2.sh
+#!/bin/bash
+
+# Install packages needed for GRUB. linux-headers isn't really needed but will help.
+if [ "$(uefi)" = "n" ]; then
+  pacman -S --noconfirm -q grub-bios linux-headers
+elif [ "$(uefi)" = "y" ]; then
+  pacman -S --noconfirm -q grub efibootmgr dosfstools mtools linux-headers
+fi
+
+# Generate inicpio.
+mkinitcpio -p linux
+
+# Set locale.
+read -r -p "What language is your OS supposed to be in? (de, us, ru,) " locale
+if [ "$(locale)" = "de" ]; then
+  sed -i 's/#de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen
+  locale-gen
+fi
+if [ "$(locale)" = "us" ]; then
+  sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+  locale-gen
+fi
+if [ "$(locale)" = "ru" ]; then
+  sed -i 's/#ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/' /etc/locale.gen
+  locale-gen
+fi
+
+if [ "$(uefi)" = "y" ]; then
+  # Install GRUB for UEFI.
+  mkdir /boot/EFI
+  mount "$(device)"1 /boot/EFI
+  grub-install --target=x86_64-efi --bootloaderid=grub_uefi --recheck
+elif [ "$(uefi)" = "n" ]; then
+  # Install GRUB for BIOS.
+  grub-install --target=i386-pc --recheck "$(device)"
+fi
+
+# Set GRUB locale.
+cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
+
+# Generate GRUB configuration file.
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# Exit the chroot.
+exit
+EOF
+  # Make the script executable.
+  chmod +x /mnt/root/archinstall-part2.sh
+
+  # Chroot into system and run the script.
+  arch-chroot /mnt /root/archinstall-part2.sh
+}
+
+last_steps() {
+  # Umount all partitions.
+  umount -a
+
+  # Reboot.
+  read -r -p "Reboot to finish the install or press n to cancel the reboot and keep configuring. (y/n) " reboot
+  if [ "$(reboot)" = "y" ]; then
+    reboot
+  fi
+}
+
+setup_wifi
+update_mirrorlist
+partition_drive
+installation
+last_steps
