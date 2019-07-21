@@ -41,19 +41,19 @@ update_mirrorlist() {
 
   # List of all currently supported mirrorlists.
   if [ "${mirrorcountry}" = "DE" ]; then
-    wget -q -0 /etc/pacman.d/mirrorlist "https://www.archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4"
+    wget -q -O /etc/pacman.d/mirrorlist "https://www.archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4"
     sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
     pacman -Syyy
   elif [ "${mirrorcountry}" = "US" ]; then
-    wget -q -0 /etc/pacman.d/mirrorlist "https://www.archlinux.org/mirrorlist/?country=US&protocol=http&protocol=https&ip_version=4"
+    wget -q -O /etc/pacman.d/mirrorlist "https://www.archlinux.org/mirrorlist/?country=US&protocol=http&protocol=https&ip_version=4"
     sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
     pacman -Syyy
   elif [ "${mirrorcountry}" = "RU" ]; then
-    wget -q -0 /etc/pacman.d/mirrorlist "https://www.archlinux.org/mirrorlist/?country=RU&protocol=http&protocol=https&ip_version=4"
+    wget -q -O /etc/pacman.d/mirrorlist "https://www.archlinux.org/mirrorlist/?country=RU&protocol=http&protocol=https&ip_version=4"
     sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
     pacman -Syyy
   elif [ "${mirrorcountry}" = "CH" ]; then
-    wget -q -0 /etc/pacman.d/mirrorlist "https://www.archlinux.org/mirrorlist/?country=CH&protocol=http&protocol=https&ip_version=4"
+    wget -q -O /etc/pacman.d/mirrorlist "https://www.archlinux.org/mirrorlist/?country=CH&protocol=http&protocol=https&ip_version=4"
     sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
     pacman -Syyy
   fi
