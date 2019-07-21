@@ -13,7 +13,7 @@ fi
 setup_wifi() {
   ## Setup WiFi.
   read -r -p "Do you want to use WiFi? (y/n) " wifi
-  if [ "${wifi}" = "y"]; then
+  if [ "${wifi}" = "y" ]; then
     # Details needed to create connection.
     read -r -p "What is it called? " wifi_name
     read -r -p "What is the password " wifi_password
