@@ -187,6 +187,9 @@ cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
 # Generate GRUB configuration file.
 grub-mkconfig -o /boot/grub/grub.cfg
 
+# Download postinstall.sh
+wget https://raw.githubusercontent.com/caevee/archscripts/master/archinstall.sh
+
 # Exit the chroot.
 exit
 EOF
@@ -202,7 +205,8 @@ last_steps() {
   umount -a
 
   # Reboot.
-  read -r -p "Reboot to finish the install or press n to cancel the reboot and keep configuring. (y/n) " reboot
+  read -r -p "Install finished. You should now reboot, log into root and run 'sh postinstall.sh'."
+  read -r -p "Do you want to reboot or keep making changes? y for reboot n for changes. (y/n) " reboot
   if [ "${reboot}" = "y" ]; then
     reboot
   fi
