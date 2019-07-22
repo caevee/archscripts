@@ -128,11 +128,11 @@ configure_system() {
   # Add user.
   read -r -p "Do you want to add a user? (y/n) " user
   if [ "${user}" = "y" ]; then
-    read -r -p "What Name?" username
+    read -r -p "What Name? " username
 
     # Create new user in the wheel group with a home directory and set its default shell to bash.
     useradd -m -G wheel -s /bin/bash "${username}"
-    read -r -p "Do you want to set a password for your user? " passwduser
+    read -r -p "Do you want to set a password for your user? (y/n) " passwduser
     if [ "${passwduser}" = "y" ]; then
       passwd "${username}"
     fi
