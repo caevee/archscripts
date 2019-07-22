@@ -5,7 +5,7 @@ echo "Hello this is caevees Installscript which is heavily inspired by aidans sc
 sleep 2
 
 # Shutdown
-read -r -p "Do you want to start the Arch installation? Press 'n' to shutdown the computer. 'y' to start the script." start
+read -r -p "Do you want to start the Arch installation? Press 'n' to shutdown the computer. 'y' to start the script. " start
 if [ "${start}" = "n" ]; then
   shutdown 0
 fi
@@ -175,7 +175,7 @@ if [ "${uefi}" = "y" ]; then
   # Install GRUB for UEFI.
   mkdir /boot/EFI
   mount "${device}"1 /boot/EFI
-  grub-install --target=x86_64-efi --bootloaderid=grub_uefi --recheck
+  grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 elif [ "${uefi}" = "n" ]; then
   # Install GRUB for BIOS.
   grub-install --target=i386-pc --recheck "${device}"
