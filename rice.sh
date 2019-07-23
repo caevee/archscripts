@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo pacman -S arc-icon-theme breeze --noconfirm
+sudo pacman -S stow arc-icon-theme breeze --noconfirm
 
 git clone https://github.com/addy-dclxvi/gtk-theme-collections
 
