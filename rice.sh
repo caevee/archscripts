@@ -2,13 +2,12 @@
 
 git clone https://github.com/addy-dclxvi/gtk-theme-collections
 
-git clone https://github.com/addy-dclxvi/openbox-theme-collections
 
 git clone https://github.com/caevee/.dotfiles
 
 sudo mv ~/gtk-theme-collections/Lumiere /usr/share/themes/
 
-sudo mv ~/openbox-theme-collections/Clia /usr/share/themes/
+mv ~/.dotfiles/CupcakeAutumn/ /usr/share/themes/CupcakeAutumn/
 
 mkdir ~/Pictures
 mkdir ~/Pictures/wal
