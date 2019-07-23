@@ -158,7 +158,7 @@ enable_necessary_stuff() {
 greeting
 setup_ethernet
 setup_wifi
-set_locale_keymap
+set_locale_and_keymap
 install_extra_kernels
 set_root_password
 install_packages
