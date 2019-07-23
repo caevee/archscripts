@@ -190,6 +190,7 @@ install_yay() {
 
 copy_rice() {
   sudo -u "${username}" sh -c "git clone https://github.com/caevee/.dotfiles && cd .dotfiles/ && stow .config/ && stow vim/ && stow bash"
+}
 
 # Call the functions
 
