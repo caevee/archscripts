@@ -188,6 +188,9 @@ install_yay() {
   fi
   }
 
+copy_rice() {
+  sudo -u "${username}" sh -c "git clone https://github.com/caevee/.dotfiles && cd .dotfiles/ && stow .config/ && stow vim/ && stow bash"
+
 # Call the functions
 
 greeting
@@ -199,6 +202,7 @@ set_root_password
 install_packages
 configure_system
 enable_necessary_stuff
+copy_rice
 
 # Reboot
 read -r -p "Post-Install finished. Do you want to reboot? (y/n) " reboot
