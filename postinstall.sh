@@ -41,11 +41,9 @@ set_locale_and_keymap() {
   read -r -p "What language is your OS supposed to be in? (de, us, ru,) "locale
   if [ "${locale}" = "de" ]; then
     localectl set-locale LANG='de_DE.UTF-8'
-  fi
-  if [ "${locale}" = "us" ]; then
+  elif [ "${locale}" = "us" ]; then
     localectl set-locale LANG='en_US.UTF-8'
-  fi
-  if [ "${locale}" = "ru" ]; then
+  elif [ "${locale}" = "ru" ]; then
     localectl set-locale LANG='ru_RU.UTF-8'
   fi
 
