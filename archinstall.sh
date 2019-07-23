@@ -142,7 +142,7 @@ partition_drive() {
 
 installation() {
   # Install base packages with pacstrap.
-  pacstrap -i /mnt base base-devel
+  pacstrap /mnt base base-devel
 
   # Generate /etc/fstab.
   genfstab -U -p /mnt >> /mnt/etc/fstab
