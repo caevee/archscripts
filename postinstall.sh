@@ -38,7 +38,7 @@ setup_wifi() {
 
 set_locale_and_keymap() {
   # Set locale
-  read -r -p "What language is your OS supposed to be in? (de, us, ru,) "locale
+  read -r -p "What language is your OS supposed to be in? (de, us, ru,) " locale
   if [ "${locale}" = "de" ]; then
     localectl set-locale LANG='de_DE.UTF-8'
   elif [ "${locale}" = "us" ]; then
