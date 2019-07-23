@@ -17,6 +17,9 @@ setup_wifi() {
     # Details needed to create connection.
     read -r -p "What is it called? " wifi_name
     read -r -p "What is the password " wifi_password
+
+    # Show list of network interfaces.
+    ip a
     read -r -p "What is your wifi interface? " wifi_interface
 
     # Copy netctl example profile
