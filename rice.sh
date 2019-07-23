@@ -1,7 +1,8 @@
 #!/bin/bash
 
-git clone https://github.com/addy-dclxvi/gtk-theme-collections
+sudo pacman -S arc-icon-theme --noconfirm
 
+git clone https://github.com/addy-dclxvi/gtk-theme-collections
 
 git clone https://github.com/caevee/.dotfiles
 
