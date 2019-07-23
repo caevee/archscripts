@@ -185,6 +185,7 @@ install_yay() {
     # Delete yay user.
     userdel -rf yay
     sed -i 's/yay ALL=(ALL) ALL NOPASSWD: ALL//' /etc/sudoers
+  fi
   }
 
 # Call the functions
