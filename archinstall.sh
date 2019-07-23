@@ -71,6 +71,9 @@ partition_drive() {
   read -r -p "What drive to partition? Type /dev/sda if you have only one drive. " device
   read -r -p "How big do you want the root partition? Use 'GiB' or 'MiB' example: 300GiB to make it 300 Gegibytes big. Enter '100%' if you want it to fill up the rest of the drive. " rootsize
 
+  # Set BIOS as default.
+  uefi=n
+
   # Check for UEFI
   if [ -d /sys/firmware/efi/ ]; then
     uefi=y
