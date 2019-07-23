@@ -189,7 +189,7 @@ install_yay() {
   }
 
 copy_rice() {
-  sudo -u "${username}" sh -c "git clone https://github.com/caevee/.dotfiles && cd .dotfiles/ && stow .config/ && stow vim/ && stow bash"
+  wget https://raw.githubusercontent.com/caevee/archscripts/master/rice.sh -P /home/caevee/
 }
 
 # Call the functions
