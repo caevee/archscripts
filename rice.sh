@@ -8,7 +8,7 @@ git clone https://github.com/caevee/.dotfiles
 
 sudo mv ~/gtk-theme-collections/Lumiere /usr/share/themes/
 
-mv ~/.dotfiles/CupcakeAutumn/ /usr/share/themes/CupcakeAutumn/
+sudo mv ~/.dotfiles/CupcakeAutumn/ /usr/share/themes/CupcakeAutumn/
 
 mkdir ~/Pictures
 mkdir ~/Pictures/wal
