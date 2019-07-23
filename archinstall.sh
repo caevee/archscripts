@@ -188,7 +188,7 @@ cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Download postinstall.sh
-wget https://raw.githubusercontent.com/caevee/archscripts/master/archinstall.sh -P /root/
+wget https://raw.githubusercontent.com/caevee/archscripts/master/postinstall.sh -O /root/postinstall.sh
 
 # Exit the chroot.
 exit
