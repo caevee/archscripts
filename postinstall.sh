@@ -151,6 +151,42 @@ enable_necessary_stuff() {
   systemctl enable lightdm.service
 }
 
+# Install yay.
+install_yay() {
+  read -r -p "Do you want to install yay? (y/n) " install_yay
+  if [ "${install_yay}" = "y" ]; then
+    # Create a yay user.
+    useradd -m --home-dir /home/yay -s /bin/bash yay
+
+    # Allow the yay user to run sudo without a password.
+    echo "yay ALL=(ALL) ALL NOPASSWD: ALL" | tee -a /etc/sudoers >/dev/null
+
+    # Clone yay.
+    git clone https://aur.archlinux.org/yay.git /home/yay/yay
+    chown yay -R /home/yay
+    continue_yay_installation="y"
+
+    # Verify PKGBUILD.
+    read -r -p "Do you want to verify the yay PKGBUILD? (y/n) " verify_yay_pkgbuild
+    if [ "${verify_yay_pkgbuild}" = "y" ]; then
+      less /home/yay/yay/PKGBUILD
+
+      # Allow the user to stop yay from being installed.
+      read -r -p "Continue installing yay? (y/n) " continue_yay_installation
+    fi
+
+    if [ "${continue_yay_installation}" = "y" ]; then
+      # Install yay as the yay user.
+      sudo -u yay sh -c "cd /home/yay/yay && makepkg -si"
+    else
+      echo "Yay has not been installed."
+    fi
+
+    # Delete yay user.
+    userdel -rf yay
+    sed -i 's/yay ALL=(ALL) ALL NOPASSWD: ALL//' /etc/sudoers
+  }
+
 # Call the functions
 
 greeting
