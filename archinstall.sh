@@ -160,16 +160,14 @@ mkinitcpio -p linux
 read -r -p "What language is your OS supposed to be in? (de, us, ru,) " locale
 if [ "${locale}" = "de" ]; then
   sed -i 's/#de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen
-  locale-gen
-fi
-if [ "${locale}" = "us" ]; then
+elif [ "${locale}" = "us" ]; then
   sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
-  locale-gen
-fi
-if [ "${locale}" = "ru" ]; then
+elif [ "${locale}" = "ru" ]; then
   sed -i 's/#ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/' /etc/locale.gen
-  locale-gen
 fi
+
+# Generate locale.
+locale-gen
 
 if [ "${uefi}" = "y" ]; then
   # Install GRUB for UEFI.
