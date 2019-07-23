@@ -1,12 +1,19 @@
 #!/bin/bash
 
-git clone https://github.com/caevee/.dotfiles  &
+git clone https://github.com/caevee/.dotfiles
 
-cd .dotfiles/ &
+cd .dotfiles/
 
-stow .config/ &
+rm -r ~/.config/Thunar
 
-stow vim/ &
+stow .config/
 
-stow bash &
+rm ~/.viminfo
+
+stow vim/
+
+rm ~/.bashrc
+rm ~/.bash_profile
+
+stow bash
 
