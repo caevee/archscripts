@@ -208,6 +208,7 @@ copy_rice
 # Reboot
 read -r -p "Post-Install finished. Do you want to reboot? (y/n) " reboot
 if [ "${reboot}" = "y" ]; then
+  echo "After the reboot log into the newly created user and run rice.sh."
   reboot
 fi
 
